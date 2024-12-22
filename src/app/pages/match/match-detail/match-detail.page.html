@@ -1,0 +1,136 @@
+<ion-header>
+  <ion-toolbar *ngIf="(currentMatch$) | async as currentMatch">
+    <ion-title>Liga: {{currentMatch.league}}, Szezon: {{currentMatch.season}}</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content *ngIf="currentMatch$ | async as asd">
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-button *ngIf="!asd.started" (click)="startMatch()">
+        Meccs indítása
+      </ion-button>
+    </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Melyik csapat kezd?</ion-col>
+      <ion-col>
+        <ion-button *ngIf="!asd.started" (click)="teamWithBall('home')">
+          Hazai
+        </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button *ngIf="!asd.started" (click)="teamWithBall('away')">
+          Vendég
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <div *ngIf="currentMatch$ | async as asd">
+    <div>
+      <ion-grid  >
+        <ion-row>
+          <ion-col>Hazai</ion-col>
+          <ion-col></ion-col>
+          <ion-col>Vendgég</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col *ngIf="teamHome$ | async as teamH">{{teamH.name}}</ion-col>
+          <ion-col><span *ngIf="this.minute<10">0</span>{{this.minute}}:<span *ngIf="this.second<10">0</span>{{this.second}}</ion-col>
+          <ion-col *ngIf="teamAway$ | async as teamA">{{teamA.name}}</ion-col>
+        </ion-row>
+
+        <ion-row>
+          <ion-col>
+            <ion-button *ngIf="asd.started" (click)="addGoal('home')">
+              {{asd.goalsHome}}
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-progress-bar [value]="q"></ion-progress-bar>
+          </ion-col>
+          <ion-col >
+            <ion-button *ngIf="asd.started" (click)="addGoal('away')">
+              {{asd.goalsAway}}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+
+        <ion-row>
+          <ion-col>
+            <ion-button *ngIf="asd.started" (click)="teamWithBall('home')">
+              {{asd.possessionHome}}
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-progress-bar [value]="p"></ion-progress-bar>
+          </ion-col>
+          <ion-col>
+            <ion-button *ngIf="asd.started" (click)="teamWithBall('away')">
+              {{asd.possessionAway}}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-button [disabled]="!asd.started" (click)="endOfTheMatch()">Meccs véglegesítése</ion-button>
+        </ion-row>
+      </ion-grid>
+      <ion-button [disabled]="!asd.started"  (click)="pontHozzaad()">Pontok</ion-button>
+    </div>
+    <!-- <div  *ngIf="asd.finished">
+      <ion-grid  >
+        <ion-row>
+          <ion-col>Hazai</ion-col>
+          <ion-col></ion-col>
+          <ion-col>Vendgég</ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col *ngIf="teamHome$ | async as teamH">{{teamH.name}}</ion-col>
+          <ion-col>Meccs vége!</ion-col>
+          <ion-col *ngIf="teamAway$ | async as teamA">{{teamA.name}}</ion-col>
+        </ion-row>
+
+
+        <ion-row>
+          <ion-col>
+            <ion-button disabled="true" *ngIf="asd.started" (click)="addGoal('home')">
+              {{asd.goalsHome}}
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-progress-bar [value]="q"></ion-progress-bar>
+          </ion-col>
+          <ion-col >
+            <ion-button disabled="true"  *ngIf="asd.started" (click)="addGoal('away')">
+              {{asd.goalsAway}}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+
+
+        <ion-row>
+          <ion-col >
+            <ion-button disabled="true" *ngIf="asd.started" (click)="teamWithBall('home')">
+              {{asd.possessionHome}}
+            </ion-button>
+          </ion-col>
+          <ion-col>
+            <ion-progress-bar [value]="p"></ion-progress-bar>
+          </ion-col>
+          <ion-col >
+            <ion-button disabled="true"  *ngIf="asd.started" (click)="teamWithBall('away')">
+              {{asd.possessionAway}}
+            </ion-button>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-button  disabled="true"  (click)="endOfTheMatch()">Meccs véglegesítése</ion-button>
+        </ion-row>
+      </ion-grid>
+    </div> -->
+  </div>
+
+</ion-content>
